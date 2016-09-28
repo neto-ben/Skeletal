@@ -12,18 +12,15 @@
 						<li class="list-group-item"><h4>Filter By [@filter_name@]</h4></li>
 					[%/PARAM%]
 					[%PARAM *body%]
-						[%DATA id:'selected' if:'==' value:'1'%]
-							[%PARAM *if_true%]
-								<li class="filter-remove filter"><a href="[@remove_single_url@]" class="list-group-item" rel="nofollow">
-									[@name@] <span class="text-muted"></span></a>
-								</li>
-							[%/PARAM%]
-							[%PARAM *if_false%]
-								<li class="filter">
-									<a class="list-group-item" href="[@url@]"> [@name@] <span class="text-muted"></span></a>
-								</li>
-							[%/PARAM%]
-						[%/DATA%]
+						[%if [@selected@] eq '1'%]
+							<li class="filter-remove filter"><a href="[@remove_single_url@]" class="list-group-item" rel="nofollow">
+								[@name@] <span class="text-muted"></span></a>
+							</li>
+						[%else%]
+							<li class="filter">
+								<a class="list-group-item" href="[@url@]"> [@name@] <span class="text-muted"></span></a>
+							</li>
+						[%/if%]
 					[%/PARAM%]
 				[%/PRODUCT_FILTER%]
 				[%PRODUCT_FILTER type:'category' limit:'100' autohide:'0' filter_parent_content:'1'%]
@@ -33,18 +30,15 @@
 						</li>
 					[%/PARAM%]
 					[%PARAM *body%]
-						[%DATA id:'selected' if:'==' value:'1'%]
-							[%PARAM *if_true%]
+						[%if [@selected@] eq '1'%]
 							<li class="filter-remove"><a href="[@remove_url@]" class="list-group-item" rel="nofollow">
-							[@name@] <span class="text-muted">([@total@])</span></a>
+								[@name@] <span class="text-muted">([@total@])</span></a>
 							</li>
-							[%/PARAM%]
-							[%PARAM *if_false%]
-								<li class="filter">
+						[%else%]
+							<li class="filter">
 								<a href="[@url@]" class="list-group-item">[@name@] <span class="text-muted">([@total@])</span></a>
-								</li>
-							[%/PARAM%]
-						[%/DATA%]
+							</li>
+						[%/if%]
 					[%/PARAM%]
 				[%/PRODUCT_FILTER%]
 				[%product_filter type:'instock' autohide:'0'%]
@@ -70,28 +64,25 @@
 							<li class="list-group-item hidden-md hidden-lg"><h4>Filter By Price Range</h4></li>
 						[%/PARAM%]
 						[%PARAM *body%]
-							[%DATA id:'selected' if:'==' value:'1'%]
-								[%PARAM *if_true%]
-									<li class="filter-remove hidden-md hidden-lg"><a href="[@remove_url@]" class="list-group-item" rel="nofollow">
-										[@name@] <span class="text-muted">([@total@])</span></a>
-									</li>
-								[%/PARAM%]
-								[%PARAM *if_false%]
-									[%DATA id:'min' if:'=' value:'0'%]
-										[%DATA id:'max' if:'>' value:'0'%]
-											<li class="filter hidden-md hidden-lg"><a class="list-group-item" href="[@url@]">[%FORMAT type:'currency' dp:'0'%][@max@][%/FORMAT%] or below</a></li>
-										[%/DATA%]
+							[%if [@selected@] eq '1'%]
+								<li class="filter-remove hidden-md hidden-lg"><a href="[@remove_url@]" class="list-group-item" rel="nofollow">
+									[@name@] <span class="text-muted">([@total@])</span></a>
+								</li>
+							[%else%]
+								[%DATA id:'min' if:'=' value:'0'%]
+									[%DATA id:'max' if:'>' value:'0'%]
+										<li class="filter hidden-md hidden-lg"><a class="list-group-item" href="[@url@]">[%FORMAT type:'currency' dp:'0'%][@max@][%/FORMAT%] or below</a></li>
 									[%/DATA%]
-									[%DATA id:'min' if:'>' value:'0'%]
-										[%DATA id:'max' if:'>' value:'0'%]
-											<li class="filter hidden-md hidden-lg"><a class="list-group-item" href="[@url@]">[%FORMAT type:'currency' dp:'0'%][@min@][%/FORMAT%] to [%FORMAT type:'currency' dp:'0'%][@max@][%/FORMAT%]</a></li>
-										[%/DATA%]
+								[%/DATA%]
+								[%DATA id:'min' if:'>' value:'0'%]
+									[%DATA id:'max' if:'>' value:'0'%]
+										<li class="filter hidden-md hidden-lg"><a class="list-group-item" href="[@url@]">[%FORMAT type:'currency' dp:'0'%][@min@][%/FORMAT%] to [%FORMAT type:'currency' dp:'0'%][@max@][%/FORMAT%]</a></li>
 									[%/DATA%]
-									[%DATA id:'max' if:'=' value:'0'%]
-										<li class="filter hidden-md hidden-lg"><a class="list-group-item" href="[@url@]">[%FORMAT type:'currency' dp:'0'%][@min@][%/FORMAT%] or above</a></li>
-									[%/DATA%]
-								[%/PARAM%]
-							[%/DATA%]
+								[%/DATA%]
+								[%DATA id:'max' if:'=' value:'0'%]
+									<li class="filter hidden-md hidden-lg"><a class="list-group-item" href="[@url@]">[%FORMAT type:'currency' dp:'0'%][@min@][%/FORMAT%] or above</a></li>
+								[%/DATA%]
+							[%/if%]
 						[%/PARAM%]
 					[%/PRODUCT_FILTER%]
 					[%PRODUCT_FILTER type:'price' limit:'1'%]
@@ -122,14 +113,11 @@
 								</script>
 							[%/SITE_VALUE%]
 							<li class="list-group-item hidden-sm hidden-xs"><p id="price-range"></p>
-								[%DATA id:'selected' if:'==' value:'1'%]
-									[%PARAM *if_true%]
-										<p id="price-range-text" class="price_range"></p>
-									[%/PARAM%]
-									[%PARAM *if_false%]
-										<p id="price-range-text" class="price_range"></p>
-									[%/PARAM%]
-								[%/DATA%]
+								[%if [@selected@] eq '1'%]
+									<p id="price-range-text" class="price_range"></p>
+								[%else%]
+									<p id="price-range-text" class="price_range"></p>
+								[%/if%]
 								<form id="pricesearch" method="get" action="[@config:current_url@]">
 									<input type="hidden" name="rf" value="[%FILTER_CODE id:'price'%][%/FILTER_CODE%]">
 									<input  name="pr" type="hidden" value="">
@@ -144,17 +132,15 @@
 							<li class="list-group-item"><h4>Filter By Brand</h4></li>
 						[%/PARAM%]
 						[%PARAM *body%]
-							[%DATA id:'selected' if:'==' value:'1'%]
-								[%PARAM *if_true%]
-									<li class="filter-remove"><a href="[@remove_url@]" class="list-group-item" rel="nofollow">
-										[@brand@] <span class="text-muted">([@total@])</span></a>
-									</li>
-								[%/PARAM%][%PARAM *if_false%]
-									<li class="filter">
-										<a href="[@url@]" class="list-group-item">[@brand@] <span class="text-muted">([@total@])</span></a>
-									</li>
-								[%/PARAM%]
-							[%/DATA%]
+							[%if [@selected@] eq '1'%]
+								<li class="filter-remove"><a href="[@remove_url@]" class="list-group-item" rel="nofollow">
+									[@brand@] <span class="text-muted">([@total@])</span></a>
+								</li>
+							[%else%]
+								<li class="filter">
+									<a href="[@url@]" class="list-group-item">[@brand@] <span class="text-muted">([@total@])</span></a>
+								</li>
+							[%/if%]
 						[%/PARAM%]
 						[%PARAM more%]
 							<li class="lv1"><a class="list-group-item" href="[%URL type:'page' id:'brands'%][%/URL%]">Show all brands...</a></li>
