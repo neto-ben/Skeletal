@@ -54,9 +54,14 @@
 	<div class="row">
 		<div class="col-sm-5">
 			[%load_ajax_template id:'_images' type:'item' template:'images' preload:'1' tmpl_sku:'[@current_sku@]' tmpl_preview:'y'/%]
+			[%if [@description@] %]
+				<meta itemprop="description" content="[%format type:'text' nohtml:'1'%][@description@][%/format%]"/>
+			[%/if%]
 		</div>
 		<div class="col-sm-7">
-			[%load_ajax_template id:'_header' type:'item' template:'header' preload:'1' tmpl_sku:'[@current_sku@]' tmpl_preview:'y'/%]
+			<div itemscope itemtype="http://schema.org/Product" class="row">
+				[%load_ajax_template id:'_header' type:'item' template:'header' preload:'1' tmpl_sku:'[@current_sku@]' tmpl_preview:'y'/%]
+			</div>
 			<form autocomplete="off">
 				[%list_item_variations id:'[@current_sku@]'%]
 					[%param header%]
